@@ -161,7 +161,6 @@
       it('should iterate over objects and provide access to each value', function() {
         var letters = {d: 'dog', e: 'elephant', f: 'flotsam'};
         var iterations = [];
-
         _.each(letters, function(value) {
           iterations.push(value);
         });

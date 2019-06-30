@@ -47,6 +47,24 @@
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
+    // get the length with .length
+    // loop through collection, calling iterator
+    let length;
+    let collectionKeys = collection;
+    const yesArray = Array.isArray(collection);
+    if (yesArray) {
+      length = collection.length;
+    } else {
+      collectionKeys = Object.keys(collection);
+      length = collectionKeys.length;
+    }
+    let i;
+    let key, value;
+    for (i = 0; i < length; i++) {
+      key = yesArray ? i : collectionKeys[i];
+      value = yesArray ? collection[i] : collection[collectionKeys[i]];
+      iterator(value, key, collection);
+    }
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
