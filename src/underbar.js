@@ -241,6 +241,7 @@
     });
     return !result;
   };
+
   /**
    * OBJECTS
    * =======
@@ -260,6 +261,16 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    // array from arguments
+    // loop through each obj
+      // add property / value to obj copy
+    const objects = Array.from(arguments);
+    for (let sourceObj of objects) {
+      for (let prop in sourceObj) {
+        obj[prop] = sourceObj[prop];
+      }
+    }
+    return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
