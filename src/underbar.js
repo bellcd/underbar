@@ -221,7 +221,6 @@
     }, false);
   };
 
-
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
@@ -236,9 +235,12 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    iterator = iterator === undefined ? _.identity : iterator;
+    let result = _.every(collection, function(value) {
+      return !(iterator(value));
+    });
+    return !result;
   };
-
-
   /**
    * OBJECTS
    * =======
