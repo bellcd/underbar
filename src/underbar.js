@@ -276,6 +276,17 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    // same as above here
+    const objects = Array.from(arguments);
+    for (let sourceObj of objects) {
+      for (let prop in sourceObj) {
+        // only adds property if property doesn't already exist on source obj
+        if (!obj.hasOwnProperty(prop)) {
+          obj[prop] = sourceObj[prop];
+        }
+      }
+    }
+    return obj;
   };
 
 
