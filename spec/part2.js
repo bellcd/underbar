@@ -108,6 +108,7 @@
       });
 
       it('should work when no callback is provided', function() {
+        // debugger;
         expect(_.every([true, true, true])).to.be.true;
         expect(_.every([true, true, false])).to.be.false;
         expect(_.every([false, false, false])).to.be.false;
@@ -440,7 +441,7 @@
         memoSpy(10);
         expect(spy).to.have.been.calledOnce;
       });
-      
+
       it('should not run the memoized function twice when given a reference type as an argument', function() {
         // Be careful how you are checking if a set of arguments has been passed in already
         var spy = sinon.spy(function() { return 'Dummy output'; });
@@ -506,7 +507,7 @@
         expect(shuffled).to.not.equal(numbers);
         expect(numbers).to.eql([4, 5, 6]);
       });
-      
+
       it('should maintain same array length', function() {
         var numbers = [1, 1, 2, 3];
         var shuffled = _.shuffle(numbers);
