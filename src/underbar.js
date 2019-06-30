@@ -86,12 +86,32 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    // iterate through collection, invoking test each time
+    // add elements that return true to result
+    let returnArr = [];
+    _.each(collection, function(value, key, collection) {
+      test(value, key, collection) ? returnArr.push(value) : undefined;
+    });
+    return returnArr;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    let filteredElem = _.filter(collection, test);
+    // copy collection
+    // iterate through filteredElem
+      // remove matched elements from copy collection
+    let result = Array.from(collection);
+    let index;
+    for (let i = 0; i < filteredElem.length; i++) {
+      index = _.indexOf(result, filteredElem[i]);
+      if (index !== -1) {
+        result.splice(index, 1);
+      }
+    }
+    return result;
   };
 
   // Produce a duplicate-free version of the array.
