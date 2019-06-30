@@ -116,6 +116,16 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    // create result array
+    // iterate over collection
+    // if result array does not contain current element, add it
+    let result = [];
+    // let index;
+    _.each(array, function(value, index, array) {
+      index = _.indexOf(result, value);
+      index === -1 ? result.push(value) : undefined;
+    });
+    return result;
   };
 
 
@@ -124,6 +134,13 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    // iterate through the collection
+      // push the return value of each iteration invocation to result
+    const result = [];
+    _.each(collection, function(value, key, collection) {
+      result.push(iterator(value, key, collection));
+    });
+    return result;
   };
 
   /*
@@ -165,6 +182,31 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    // _.each logic from before, with modifications to skip first element if accumulator is not present
+
+    // get the length with .length
+    // loop through collection, calling iterator
+    let length, i, key, value;
+    let collectionKeys = collection;
+    const yesArray = Array.isArray(collection);
+    if (yesArray) {
+      length = collection.length;
+    } else {
+      collectionKeys = Object.keys(collection);
+      length = collectionKeys.length;
+    }
+
+    if (accumulator === undefined) {
+      accumulator = yesArray ? collection[0] : collection[collectionKeys[0]];
+      i = 1;
+    } else {
+      i = 0;
+    }
+    for (i; i < length; i++) {
+      value = yesArray ? collection[i] : collection[collectionKeys[i]];
+      accumulator = iterator(accumulator, value);
+    }
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
