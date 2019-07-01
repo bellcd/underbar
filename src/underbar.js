@@ -469,7 +469,7 @@
       return _.reduce(nestedArray, function(acc, elem) {
         // if the current element is itself an array, invoke flatten with a nested array argument of the current element
         let value = Array.isArray(elem) ? _.flatten(elem, result) : result.concat(elem);
-        // the accumulator here is a single level deep array, concatenated with the flattened (if necessary) current element 
+        // the accumulator here is a single level deep array, concatenated with the flattened (if necessary) current element
         return acc.concat(value);
       }, result);
   };
@@ -477,6 +477,26 @@
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    // assume
+      // at least 2 separate arrays will be passed as arguments
+    // create sourceArr from arguments
+    let result = [];
+    let sourceArr = Array.from(arguments);
+    // sort sourceArr such that the longest subarray is first
+    sourceArr.sort(function(first, second) {
+      return second.length - first.length;
+    })
+    // iterate through the first subarray in sourceArr
+    _.each(sourceArr[0], function(value, key, collection) {
+      // if every other array in sourceArr has the current element
+      for (let i = 1; i < sourceArr.length; i++) {
+        if (_.indexOf(sourceArr[i], value) !== -1) {
+          // push current element to result
+          result.push(value);
+        }
+      }
+    });
+  return result;
   };
 
   // Take the difference between one array and a number of other arrays.
