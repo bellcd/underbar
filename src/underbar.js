@@ -506,14 +506,19 @@
     // create sourceArr from arguments
     let result = [];
     let sourceArr = Array.from(arguments);
+    let inOnlyOne = true;
     // iterate through the first subarray in sourceArr
     _.each(sourceArr[0], function(value, key, collection) {
-      // if every other array in sourceArr does NOT have the current element
+      inOnlyOne = true;
       for (let i = 1; i < sourceArr.length; i++) {
-        if (_.indexOf(sourceArr[i], value) === -1) {
-          // push current element to result
-          result.push(value);
+        if (_.indexOf(sourceArr[i], value) !== -1) {
+          // if any array has the current element, set flag
+          inOnlyOne = false;
         }
+      }
+      // flag is true here when the current element is only in one array, so push the current element to result
+      if (inOnlyOne) {
+        result.push(value);
       }
     });
   return result;
