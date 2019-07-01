@@ -88,13 +88,13 @@
     });
 
     describe('flatten', function() {
+
       checkForNativeMethods(function() {
         _.flatten([1, [2], [3, [[[4]]]]])
       });
 
       it('can flatten nested arrays', function() {
         var nestedArray = [1, [2], [3, [[[4]]]]];
-
         expect(_.flatten(nestedArray)).to.eql([1,2,3,4]);
       });
     });

@@ -464,7 +464,14 @@
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
-  _.flatten = function(nestedArray, result) {
+  _.flatten = function(nestedArray, result = []) {
+      // reduce the current binding of nestedArray to a one level array
+      return _.reduce(nestedArray, function(acc, elem) {
+        // if the current element is itself an array, invoke flatten with a nested array argument of the current element
+        let value = Array.isArray(elem) ? _.flatten(elem, result) : result.concat(elem);
+        // the accumulator here is a single level deep array, concatenated with the flattened (if necessary) current element 
+        return acc.concat(value);
+      }, result);
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
