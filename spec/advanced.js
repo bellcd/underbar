@@ -27,7 +27,6 @@
 
       it('runs the specified method on each item in the array, and returns a list of results', function() {
         var upperCasedStrings = _.invoke(['dog', 'cat'], 'toUpperCase');
-
         expect(upperCasedStrings).to.eql(['DOG', 'CAT']);
       });
     });
