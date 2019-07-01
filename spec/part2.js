@@ -489,9 +489,9 @@
       });
 
       it('should have successfully passed function arguments in', function() {
+
         _.delay(callback, 100, 1, 2);
         clock.tick(100);
-
         expect(callback).to.have.been.calledWith(1, 2);
       });
     });
