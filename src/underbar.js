@@ -330,6 +330,20 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    // create function that will be returned, and invoke func when run
+    // create array that will hold arguments to func
+    const argObj = {};
+    function resultFunc() {
+      let result;
+      // check if current arguments are already in argObj, using stringify
+      let stringified = JSON.stringify(arguments);
+      if (!argObj.hasOwnProperty(stringified)) {
+        // func has NOT been called with the current arguments, so invoke it, and create prop on argObj with return value
+        argObj[stringified] = func.apply(this, arguments);
+      }
+      return argObj[stringified];
+    }
+    return resultFunc;
   };
 
   // Delays a function for the given number of milliseconds, and then calls
