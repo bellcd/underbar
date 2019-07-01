@@ -442,6 +442,22 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+    // create an array from arguments
+    // sort such that the longest subarry is at index 0
+    // iterate the length of that array
+      // push each index of each subarray in sequence into the new array of arrays
+      const argCopy = Array.from(arguments);
+      argCopy.sort(function(first, second) {
+        return second.length - first.length;
+      })
+      const result = [];
+      for (let i = 0; i < argCopy.length; i++) {
+        result[i] = [];
+        for (let j = 0; j < argCopy[0].length; j++) {
+          result[i][j] = argCopy[j][i];
+        }
+      }
+      return result;
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
