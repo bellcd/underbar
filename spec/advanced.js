@@ -127,6 +127,14 @@
         expect(_.intersection(stooges, leaders)).to.eql(['moe']);
       });
 
+      it('should take the set intersection of more than two arrays', function() {
+        var colors = ['red', 'blue', 'green'];
+        var moreColors = ['blue', 'purple', 'green'];
+        var soManyColors = ['red', 'purple', 'yellow', 'green'];
+
+        expect(_.intersection(colors, moreColors, soManyColors)).to.eql(['green']);
+      });
+
     });
 
     describe('difference', function() {

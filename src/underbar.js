@@ -482,18 +482,19 @@
     // create sourceArr from arguments
     let result = [];
     let sourceArr = Array.from(arguments);
-    // sort sourceArr such that the longest subarray is first
-    sourceArr.sort(function(first, second) {
-      return second.length - first.length;
-    })
+    let inEvery = true;
     // iterate through the first subarray in sourceArr
     _.each(sourceArr[0], function(value, key, collection) {
-      // if every other array in sourceArr has the current element
+      inEvery = true;
       for (let i = 1; i < sourceArr.length; i++) {
-        if (_.indexOf(sourceArr[i], value) !== -1) {
-          // push current element to result
-          result.push(value);
+        if (_.indexOf(sourceArr[i], value) === -1) {
+          // if any array doesn NOT have the current element, set flag
+          inEvery = false;
         }
+      }
+      // flag is true here when every other array has the current element, so push the current element to result
+      if (inEvery) {
+        result.push(value);
       }
     });
   return result;
@@ -502,6 +503,20 @@
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    // create sourceArr from arguments
+    let result = [];
+    let sourceArr = Array.from(arguments);
+    // iterate through the first subarray in sourceArr
+    _.each(sourceArr[0], function(value, key, collection) {
+      // if every other array in sourceArr does NOT have the current element
+      for (let i = 1; i < sourceArr.length; i++) {
+        if (_.indexOf(sourceArr[i], value) === -1) {
+          // push current element to result
+          result.push(value);
+        }
+      }
+    });
+  return result;
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
