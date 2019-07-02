@@ -530,5 +530,56 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+    // these two variables are available in the returned function's closure
+    let timestamp = Date.now(); // initial timestamp
+    let timeoutID = null; // timeoutID tracks whether or not the setTimout call below has already queued a function invocation in the task queue
+
+    return function() {
+      // determine if this particular invocation of the returned function is within the timeout window specified
+      let insideTimoutWindow = Date.now() > timestamp + wait ? false : true;
+      // only queue new func invocation if inside timeout window AND no func invocation currently scheduled
+      if (insideTimoutWindow) {
+        if (!timeoutID) {
+          timeoutID = setTimeout(function() { // timeoutID points to positive integer when setTimeout queues this function invocation
+            timestamp = Date.now();
+            timeoutID = null;
+            func();
+          }, (timestamp + wait) - Date.now()); // the inline function above only invokes after waiting (at minimum) to the end of this timeout window
+        }
+      } else {
+        // if outside timeout window AND no function invocation queued, invoke func & update timestamp
+        timestamp = Date.now();
+        func();
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+      // // set current timestamp
+      // let lastRunTimestamp = Date.now();
+      // // flag
+      // let hasRun = false;
+      // // returned function invokes func when run
+      // return function() {
+      //   let currentTimestamp
+      //   // determine if inside time window
+      //   if (Date.now() - timestamp <= wait) {
+      //     // determine if has run already for this time window
+      //     if () {
+      //       // ok to run
+      //       func();
+      //       hasRun = true;
+      //     }
+      //
+      //   }
+      //
+      // }
   };
 }());
