@@ -116,6 +116,10 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    // if iterator is passed in, transorm array and work with the transformation
+    if (iterator) {
+      array = _.map(array, iterator);
+    }
     // create result array
     // iterate over collection
     // if result array does not contain current element, add it
