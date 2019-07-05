@@ -116,22 +116,25 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-    // if iterator is passed in, transorm array and work with the transformation
-    if (iterator) {
-      array = _.map(array, iterator);
-    }
+    // make a copy of the argument array
+    const arrCopy = array.slice()
     // create result array
     // iterate over collection
-    // if result array does not contain current element, add it
+    // if result arrayCopy does not contain current element, add it
     let result = [];
-    // let index;
-    _.each(array, function(value, index, array) {
-      index = _.indexOf(result, value);
-      index === -1 ? result.push(value) : undefined;
-    });
+    let index;
+    for (let i = 0; i < arrCopy.length; i++) {
+      // if array of numbers is sorted, and at least 2 elements have been processed, check if there are more unique elements in source array
+      if (isSorted && i > 1 && typeof arrCopy[i] === 'number' && arrCopy[i - 1] === arrCopy[i]) {
+        // one of the numbers has repeated, no more unique numbers are present
+        break;
+      }
+      // if iterator is passed in, transform the array element to the return value of the iteration function for that element
+        index = _.indexOf(result, iterator ? iterator(arrCopy[i]) : arrCopy[i]);
+        index === -1 ? result.push(arrCopy[i]) : undefined;
+      };
     return result;
   };
-
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
